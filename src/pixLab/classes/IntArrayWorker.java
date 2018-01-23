@@ -99,5 +99,49 @@ public class IntArrayWorker
       }
     }
   }
- 
+  
+  public int getColTotal(int col)
+  {
+	  int total = 0;
+	  
+	  for(int row = 0; row < matrix.length; row++)
+	  {
+		  total = total + matrix[row][col];
+	  }
+	  return total;
+  }
+  
+  public int getLargest()
+  {
+	  int largest = Integer.MIN_VALUE;
+	  
+	  for(int row = 0; row < matrix.length; row++)
+	  {
+		  for(int col = 0; col < matrix[row].length; col++)
+		  {
+			  if(matrix[row][col] > largest)
+			  {
+				  largest = matrix[row][col];
+			  }
+		  }
+	  }
+	  return largest;
+  }
+  
+  public int getCount(int num)
+  {
+	  int count = 0;
+	  
+	  for(int row = 0; row < matrix.length; row++)
+	  {
+		  for(int col = 0; col < matrix[row].length; col++)
+		  {
+			  if(matrix[row][col] == num)
+			  {
+				  count++;
+			  }
+		  }
+	  }
+	  return count;
+  }
 }
