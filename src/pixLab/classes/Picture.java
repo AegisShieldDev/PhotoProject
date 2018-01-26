@@ -150,8 +150,7 @@ public class Picture extends SimplePicture
     * @param startRow the start row to copy to
     * @param startCol the start col to copy to
     */
-  public void copy(Picture fromPic, 
-                 int startRow, int startCol)
+  public void copy(Picture fromPic, int startRow, int startCol)
   {
     Pixel fromPixel = null;
     Pixel toPixel = null;
@@ -172,6 +171,13 @@ public class Picture extends SimplePicture
         toPixel.setColor(fromPixel.getColor());
       }
     }   
+  }
+  
+  public void cardinalFilter()
+  {
+	  Pixel fromPixel = null;
+	  Pixel toPixel = null;
+	  Picture cardinal = new Picture("Cardinal.png")
   }
 
   /** Method to create a collage of several pictures */
