@@ -280,25 +280,20 @@ public class Picture extends SimplePicture
   public void createGlitch()
   {
 	  Pixel[][] pixels = this.getPixels2D();
-	  Pixel[][] pixelsTwo = this.getPixels2D();
-	  Pixel[][] tempPixels = this.getPixels2D();
+	  Pixel[][] tempPixels = new Pixel[pixels.length][pixels[0].length];
 	  
 	  
 	  for(int row = 0; row < pixels.length; row++)
 	  {
 		  for(int col = (int)(pixels[0].length * .3); col < pixels[0].length ; col++)
 		  {
-			  tempPixels[row][col].setColor((pixelsTwo[row][col - (int)(pixels[0].length * .3)]).getColor());
+			  tempPixels[row][col] = pixels[row][col - (int)(pixels[0].length * .3)];
 			  //tempPixels[row][col] = pixels[row][col];
 			  //tempPixels[row][col].setColor(Color.red);
 		  }
-	  }
-	  
-	  for(int row = 0; row < pixels.length; row++)
-	  {
 		  for(int col = 0; col < (int)(pixels[0].length * .3); col++)
 		  {
-			  tempPixels[row][col].setColor((pixels[row][col + pixels[0].length - (int)(pixels[0].length * .3)]).getColor());
+			  tempPixels[row][col] = pixels[row][col + pixels[0].length - (int)(pixels[0].length * .3)];
 			  //tempPixels[row][col] = pixels[row][col];
 			  //tempPixels[row][col].setColor(Color.blue);
 			  
