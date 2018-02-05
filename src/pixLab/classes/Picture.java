@@ -136,8 +136,7 @@ public class Picture extends SimplePicture
       {
         
         leftPixel = pixels[row][col];      
-        rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
     }
@@ -173,11 +172,66 @@ public class Picture extends SimplePicture
     }   
   }
   
-  public void cardinalFilter()
+  public void cardinalFilter(int startRow, int startCol)
   {
 	  Pixel fromPixel = null;
 	  Pixel toPixel = null;
-	  Picture cardinal = new Picture("Cardinal.png")
+	  Picture cardinal = new Picture("Cardinal.png");
+	  Pixel [][] toPixels = this.getPixels2D();
+	  Pixel [][] fromPixels = cardinal.getPixels2D();
+	  int fromRow = 0;
+	  for(int toRow = startRow; fromRow < fromPixels.length && toRow < toPixels.length; toRow++)
+	  {
+		  int fromCol = 0;
+		  for(int toCol = startCol; fromCol < fromPixels[0].length && toCol < toPixels[0].length; toCol++)
+		  {
+			  fromPixel = fromPixels[fromRow][fromCol];
+			  toPixel = toPixels[toRow][toCol];
+			  if(!fromPixel.isTransparent())
+			  {
+				  toPixel.setColor(fromPixel.getColor());
+			  }
+			  fromCol++;
+		  }
+		  fromRow++;
+	  }
+  }
+  public void mirrorHorizontal()
+  {  
+	  Pixel topPixel = null;
+	  Pixel bottomPixel = null;
+	  Pixel [][] pixels = this.getPixels2D();
+	  int width = pixels.length;
+	  int height = pixels.length;
+	  for(int col = width; col == 0; col--)
+	  {
+		  for(int row = height - 1; row > pixels.length /2; row--)
+		  {
+			  bottomPixel = pixels[row][col];
+			  topPixel = pixels[height-1-row][col];
+		  }
+	  }
+	  
+  }
+  public void blueFlipFilter()
+  {  
+	  Picture beach1 = new Picture("beach.jpg");
+	  Picture beach2 = new Picture("beach.jpg");
+	  beach1.zeroBlue();
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel leftPixel = null;
+	  Pixel rightPixel = null;
+	  int width = pixels[0].length;
+	  for (int row = 0; row < pixels.length; row++)
+	  {
+		  for (int col = 0; col < width / 2; col++)
+		  {
+			  leftPixel = pixels[row][col];
+			  rightPixel = pixels[row][width - 1 - col];
+			  rightPixel.setColor(leftPixel.getColor());
+		  }
+	  } 
+	  
   }
 
   /** Method to create a collage of several pictures */
@@ -223,6 +277,43 @@ public class Picture extends SimplePicture
       }
     }
   }
+  public void createGlitch()
+  {
+	  Pixel[][] pixels = this.getPixels2D();
+	  Pixel[][] pixelsTwo = this.getPixels2D();
+	  Pixel[][] tempPixels = this.getPixels2D();
+	  
+	  
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = (int)(pixels[0].length * .3); col < pixels[0].length ; col++)
+		  {
+			  tempPixels[row][col].setColor((pixelsTwo[row][col - (int)(pixels[0].length * .3)]).getColor());
+			  //tempPixels[row][col] = pixels[row][col];
+			  //tempPixels[row][col].setColor(Color.red);
+		  }
+	  }
+	  
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = 0; col < (int)(pixels[0].length * .3); col++)
+		  {
+			  tempPixels[row][col].setColor((pixels[row][col + pixels[0].length - (int)(pixels[0].length * .3)]).getColor());
+			  //tempPixels[row][col] = pixels[row][col];
+			  //tempPixels[row][col].setColor(Color.blue);
+			  
+		  }
+	  }
+	  
+	  for(int row = 0; row < pixels.length; row++)
+	  {
+		  for(int col = 0; col < pixels[0].length; col++)
+		  {
+			  pixels[row][col].setColor(tempPixels[row][col].getColor());
+		  }
+	  }
+	  
+  }
   
   
   /* Main method for testing - each class in Java can have a main 
@@ -232,7 +323,8 @@ public class Picture extends SimplePicture
   {
     Picture beach = new Picture("beach.jpg");
     beach.explore();
-    beach.zeroBlue();
+    beach.createGlitch();
+    //beach.zeroBlue();
     beach.explore();
   }
   
