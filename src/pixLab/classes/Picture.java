@@ -280,28 +280,46 @@ public class Picture extends SimplePicture
   public void createGlitch()
   {
 	  Pixel[][] pixels = this.getPixels2D();
-	  int picWidth = pixels.length;
-	  int picHeight = pixels[0].length;
-	  Color[][] tempColor = new Color[picWidth][picHeight];
+	  int width = pixels.length;
+	  int height = pixels[0].length;
+	  Color[][] tempColor = new Color[width][height];
+	  Double change = .3;
 	  
-	  for(int row = 0; row < picWidth; row++)
+	  for(int row = 0; row < width; row++)
 	  {
-		  for(int col = (int)(picHeight * .3); col < picHeight ; col++)
+		  for(int col = (int)(height * change); col < height ; col++)
 		  {
-			  tempColor[row][col] = (pixels[row][col - (int)(picHeight * .3)]).getColor();
+			  tempColor[row][col] = (pixels[row][col - (int)(height * change)]).getColor();
 		  }
 		  
-		  for(int col = 0; col < (int)(picHeight * .3); col++)
+		  for(int col = 0; col < (int)(height * change); col++)
 		  {
-			  tempColor[row][col] = (pixels[row][col + picHeight - (int)(picHeight * .3)]).getColor();  
+			  tempColor[row][col] = (pixels[row][col + height - (int)(height * change)]).getColor();  
 		  }
 		  
-		  for(int col = 0; col < picHeight; col++)
+		  for(int col = 0; col < height; col++)
 		  {
 			  pixels[row][col].setColor(tempColor[row][col]);
 		  }
 	  }
-	  
+	  for(int row = 0; row < width - 40; row++)
+	  {
+		  for(int col = 0; col < height - 40; col++)
+		  {
+			  pixels[row][col].setRed((pixels[row + 40][col + 40]).getRed());
+			  pixels[row][col].setBlue((pixels[row + 40][col + 40]).getBlue());
+		  }
+		  
+	  }
+	  for(int row = width - 1; row <= 0 + 40; row--)
+	  {
+		  for(int col = height - 1; col <= 0 + 40; col--)
+		  {
+			  
+			  
+		  }
+		  
+	  }
   }
   
   
